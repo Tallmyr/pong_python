@@ -19,6 +19,12 @@ class Actor(pygame.sprite.Sprite):
         self.vy = max(self.vy, -3)
         self.rect.y += self.vy
 
+    def ai(self, ball):
+        if self.rect.y + 20 < ball:
+            self.vy += 0.5
+        if self.rect.y + 20 > ball:
+            self.vy += -0.5
+
 
 class Ball(pygame.sprite.Sprite):
     def __init__(self, width, height):

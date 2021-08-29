@@ -62,6 +62,7 @@ while running:
         ball.reset("player")
 
     # Update
+    opponent.ai(ball.rect.y)
     actors.update()
     balls.update()
 
