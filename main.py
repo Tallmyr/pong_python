@@ -50,8 +50,10 @@ while running:
         ball.vy *= -1
 
     # Check Collision with Paddles
-    if pygame.sprite.spritecollideany(ball, actors):
+    collision = pygame.sprite.spritecollideany(ball, actors)
+    if collision:
         ball.vx *= -1
+        ball.vy += collision.vy / 5
 
     # Check Score
     if ball.rect.x < 0:
