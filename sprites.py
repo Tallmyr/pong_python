@@ -21,9 +21,9 @@ class Actor(pygame.sprite.Sprite):
 
     def ai(self, ball):
         if self.rect.y + 20 < ball:
-            self.vy += 0.5
+            self.vy += 0.7
         if self.rect.y + 20 > ball:
-            self.vy += -0.5
+            self.vy += -0.7
 
 
 class Ball(pygame.sprite.Sprite):
