@@ -37,7 +37,7 @@ class Ball(pygame.sprite.Sprite):
 
         #  Set Ball Moving
         self.vx = -2
-        self.vy = random.randint(-3, 3)
+        self.vy = random.uniform(-3, 3)
 
     def update(self):
         self.rect.x += self.vx
@@ -49,4 +49,4 @@ class Ball(pygame.sprite.Sprite):
             self.vx = -2
         elif dir == "player":
             self.vx = 2
-        self.vy = random.randint(-3, 3)
+        self.vy = random.uniform(-3, 3)
