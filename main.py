@@ -14,6 +14,9 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Pong")
 clock = pygame.time.Clock()
 
+# Import Sounds
+blip_sound = pygame.mixer.Sound("assets/blip.wav")
+
 # Import Sprites
 actors = pygame.sprite.Group()
 player = Actor(WIDTH, HEIGHT, True)
@@ -31,6 +34,10 @@ font = pygame.font.SysFont("freesansbold.tff", 32)
 def score(x, score):
     score = font.render(str(score), True, ("white"))
     screen.blit(score, (x, 30))
+
+
+def play_sound(sound):
+    pygame.mixer.Sound.play(sound)
 
 
 # Game loop
@@ -56,12 +63,14 @@ while running:
     # Check Collision with Walls
     if ball.rect.y < 0 or ball.rect.y > HEIGHT - 10:
         ball.vy *= -1
+        play_sound(blip_sound)
 
     # Check Collision with Paddles
     collision = pygame.sprite.spritecollideany(ball, actors)
     if collision:
         ball.vx *= -1
         ball.vy += collision.vy / 5
+        play_sound(blip_sound)
 
     # Check Score
     if ball.rect.x < 0:
