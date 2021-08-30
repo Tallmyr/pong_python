@@ -24,6 +24,14 @@ balls = pygame.sprite.Group()
 ball = Ball(WIDTH, HEIGHT)
 balls.add(ball)
 
+# Set text
+font = pygame.font.SysFont("freesansbold.tff", 32)
+
+
+def score(x, score):
+    score = font.render(str(score), True, ("white"))
+    screen.blit(score, (x, 30))
+
 
 # Game loop
 running = True
@@ -64,12 +72,15 @@ while running:
         ball.reset("player")
 
     # Update
+
     opponent.ai(ball.rect.y)
     actors.update()
     balls.update()
 
     # Draw / render
     screen.fill("black")
+    score(50, player.score)
+    score(WIDTH - 50, opponent.score)
     actors.draw(screen)
     balls.draw(screen)
     # *after* drawing everything, flip the display
