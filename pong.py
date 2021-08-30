@@ -30,8 +30,8 @@ ball = Ball(WIDTH, HEIGHT)
 
 
 # Set text
-score_font = pygame.font.SysFont("freesansbold.tff", 32)
-menu_font = pygame.font.SysFont("freesansbold.tff", 64)
+score_font = pygame.font.SysFont("Arial", 32)
+menu_font = pygame.font.SysFont("Arial", 64)
 
 # Vars
 gameover = True

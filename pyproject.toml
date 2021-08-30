@@ -8,6 +8,7 @@ license = "MIT"
 [tool.poetry.dependencies]
 python = "^3.9"
 pygame = "^2.0.1"
+Nuitka = "^0.6.16"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^3.9.2"
