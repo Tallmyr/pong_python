@@ -25,6 +25,9 @@ class Actor(pygame.sprite.Sprite):
         if self.rect.y + 20 > ball:
             self.vy += -0.7
 
+    def reset(self):
+        self.score = 0
+
 
 class Ball(pygame.sprite.Sprite):
     def __init__(self, width, height):

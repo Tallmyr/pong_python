@@ -6,6 +6,8 @@ WIDTH = 640
 HEIGHT = 480
 FPS = 60
 
+FINALSCORE = 9
+
 
 # initialize pygame and create window
 pygame.init()
@@ -25,15 +27,39 @@ actors.add(player, opponent)
 
 balls = pygame.sprite.Group()
 ball = Ball(WIDTH, HEIGHT)
-balls.add(ball)
+
 
 # Set text
-font = pygame.font.SysFont("freesansbold.tff", 32)
+score_font = pygame.font.SysFont("freesansbold.tff", 32)
+menu_font = pygame.font.SysFont("freesansbold.tff", 64)
+
+# Vars
+gameover = True
+winner = ""
+
+
+# Functions
+def start():
+    text = score_font.render("Press SpaceBar to Start", True, ("white"))
+    text_width = text.get_width()
+    screen.blit(text, ((WIDTH / 2) - (text_width / 2), (HEIGHT / 2) - 32))
+
+
+def win(winner):
+    text = score_font.render(str(winner) + " wins the round!", True, ("white"))
+    text_width = text.get_width()
+    screen.blit(text, ((WIDTH / 2) - (text_width / 2), (HEIGHT / 2) - 128))
+
+
+def newgame():
+    balls.add(ball)
+    player.reset()
+    opponent.reset()
 
 
 def score(x, score):
-    score = font.render(str(score), True, ("white"))
-    screen.blit(score, (x, 30))
+    text = score_font.render(str(score), True, ("white"))
+    screen.blit(text, (x, 30))
 
 
 def play_sound(sound):
@@ -50,6 +76,10 @@ while running:
         # check for closing window
         if event.type == pygame.QUIT:
             running = False
+        if gameover and event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+            gameover = False
+            winner = ""
+            newgame()
 
     # Key Inputs
     keys = pygame.key.get_pressed()
@@ -69,7 +99,7 @@ while running:
     collision = pygame.sprite.spritecollideany(ball, actors)
     if collision:
         ball.vx *= -1
-        ball.vy += collision.vy / 5
+        ball.vy += collision.vy / 3
         play_sound(blip_sound)
 
     # Check Score
@@ -79,6 +109,12 @@ while running:
     if ball.rect.x > WIDTH - 10:
         player.score += 1
         ball.reset("player")
+    if opponent.score == FINALSCORE:
+        gameover = True
+        winner = "Computer"
+    if player.score == FINALSCORE:
+        gameover = True
+        winner = "Player"
 
     # Update
 
@@ -88,6 +124,13 @@ while running:
 
     # Draw / render
     screen.fill("black")
+
+    if gameover:
+        ball.kill()
+        start()
+        if winner != "":
+            win(winner)
+
     score(50, player.score)
     score(WIDTH - 50, opponent.score)
     actors.draw(screen)
